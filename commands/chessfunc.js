@@ -23,7 +23,7 @@ module.exports.calcBetterMove = function(chess) {
     return bestMove;
 
 };
-var evaluateBoard = function (chess) {
+module.exports.evaluateBoard = function (chess) {
     //letters of columns
 	var letters = ['a','b','c','d','e','f','g','h'];
 	//numbers of rows
@@ -43,7 +43,7 @@ var evaluateBoard = function (chess) {
 	return total;
 };
 
-var getPieceValue = function (piece, posX, posY) {
+module.exports.getPieceValue = function (piece, posX, posY) {
     if (piece === null) {
         return 0;
     }
@@ -74,7 +74,7 @@ var getPieceValue = function (piece, posX, posY) {
     return piece.color === 'w' ? absoluteValue : -absoluteValue;
 };
 
-var minimax = function(depth, chess, alpha, beta , maximizingPlayer) {
+module.exports.minimax = function(depth, chess, alpha, beta , maximizingPlayer) {
     //if node is the root 
     if(depth === 0){
         return -evaluateBoard(chess);
@@ -133,7 +133,7 @@ module.exports.minimaxRoot = function(depth, chess, maximizingPlayer) {
     }
     return foundMove; 
 }
-var reverseArray = function(array) {
+module.exports.reverseArray = function(array) {
     return array.slice().reverse();
 };
 
