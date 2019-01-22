@@ -7,8 +7,11 @@
  *
  * Date: 10 Aug 2013
  */
-
 /* clearfix */
+.board {
+    width: 400px;
+    margin: auto;
+}
 .clearfix-7da63 {
   clear: both;
 }
