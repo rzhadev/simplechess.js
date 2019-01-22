@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const googleProfanityWords = require('google-profanity-words')
 const client = new Discord.Client();
 const config = require('./config.json');
-//https://rzha1.github.io
+//https://rzhadev.github.io/smartchess.js/
 
 //node file systems soon tm 
 const fs = require('fs');
