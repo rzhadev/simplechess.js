@@ -1,8 +1,7 @@
-const Discord = require('discord.js');
 const Chess = require('chess.js').Chess;
 const chess = new Chess();
 const chessfunc = require('./chessfunc');
-//chess game
+
 module.exports.run = async (bot, message, args) => {
 	message.channel.send('Use the command "?moves [square]" to get a valid list of moves from that square ex  ::  "?moves e2"\nUse the command "?move [moveFrom] [moveTo]" to move a piece  ::  "?move e2 e4"');
 	while(!chess.game_over()){
@@ -32,13 +31,10 @@ module.exports.run = async (bot, message, args) => {
 				continue;
 			}
 			else {
-				chess.move({from:moveFrom,to:moveTo});
+                chess.move({ from: moveFrom, to: moveTo });
 				//computer move using minimax depth 3
-				var computerMove = chessfunc.minimaxRoot(3,chess,true);
-				if(!computerMove) {
-					break;
-				}
-				chess.move(computerMove);
+                var computerMove = chessfunc.minimaxRoot(3, chess, true);
+                chess.move(computerMove);
                 message.channel.send(`I moved to ${computerMove}`);
 			}
 		}

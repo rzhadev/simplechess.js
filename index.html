@@ -14,7 +14,7 @@
     <div id="board" style="width:400px"></div>
     <script>
         var chess = new Chess();
-        var board; 
+        var board;
         var onDragStart = function (source, piece, position, orientation) {
             if (chess.in_checkmate() === true || chess.in_draw() === true || piece.search(/^b/) !== -1) {
                 return false;
@@ -30,11 +30,12 @@
             var move = chess.move({
                 from: source,
                 to: target,
-                promotion: 'q' // NOTE: always promote to a queen for example simplicity
+                promotion: 'q'
             });
             if (move === null) {
                 return 'snapback';
             }
+            
             window.setTimeout(makeMove, 250);
         };
         var onSnapEnd = function () {
@@ -47,8 +48,9 @@
             onDrop: onDrop,
             onSnapEnd: onSnapEnd,
         };
-
-        var board = ChessBoard('board', config);
+       
+        board = ChessBoard('board', config);
+ 
     </script>
 </body>
 </html>
