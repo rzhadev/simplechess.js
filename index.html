@@ -21,7 +21,7 @@
             }
         };
         var makeMove = function () {
-            var move = minimaxRoot(3, chess, true);
+            var move = minimaxRoot(2, chess, true);
             chess.move(move);
             board.position(chess.fen());
         };
@@ -35,7 +35,9 @@
             if (move === null) {
                 return 'snapback';
             }
-            
+            if (chess.game_over()) {
+                alert('Game over');
+            }
             window.setTimeout(makeMove,100);
         };
         var onSnapEnd = function () {
@@ -48,7 +50,6 @@
             onDrop: onDrop,
             onSnapEnd: onSnapEnd,
         };
-       
         board = ChessBoard('board', config);
  
     </script>
