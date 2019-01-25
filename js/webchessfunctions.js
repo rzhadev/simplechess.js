@@ -1,10 +1,11 @@
 // to do 
-// improve evaluation, mobility etc
-// end game handling? transposition tables
-// iterative deepening ? 
-var minimaxRoot = function (depth, chess, maxplayer) {
-    var moves = chess.moves();
+//rewrite piece evaluation 
+// iterative deepening ?
+// end game handling ? transposition tables
 
+
+var minimaxRoot = function (depth, chess, maxplayer) { //negamax algorithm which will call minimax
+    var moves = chess.moves();
     let bestValue = -9999;
     let bestMove = null; 
     for (var i = 0; i < moves.length; i++) {
@@ -22,25 +23,9 @@ var minimaxRoot = function (depth, chess, maxplayer) {
     console.log(`best value ${bestValue}`);
     return bestMove;
 }
-var evaluateBoard = function (chess) {
-    //letters of columns
-    let columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-    //numbers of rows
-    let rows = ['1', '2', '3', '4', '5', '6', '7', '8'];
-    let total = 0;
-    for (var i = 0; i < columns.length; i++) {
-        let column = columns[i];
-        for (var k = 0; k < rows.length; k++) {
-            let row = rows[k];
-            let value = getPieceValue(chess.get(column + row),i,k);
-            total += value;
-        }
-    }
-    return total;
-}
-var minimax = (depth, chess, alpha, beta, maxplayer) => {
+var minimax = (depth, chess, alpha, beta, maxplayer) => { //minimax algorithm 
     if (depth === 0) {
-        return -evaluateBoard(chess);
+        return -evaluateBoard(chess); //negative because ai will be black
     }
     var moves = chess.moves();
     if (maxplayer) {
@@ -72,31 +57,53 @@ var minimax = (depth, chess, alpha, beta, maxplayer) => {
         return value;
     }
 }
-var getPieceValue = function (piece,x,y) {
-    if (piece === null) {
+var evaluateBoard = function (chess) { //evaluate heuristic value of the board
+    let columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];  //letters of columns
+    let rows = ['1', '2', '3', '4', '5', '6', '7', '8']; //numbers of rows
+    let total = 0;
+    for (var i = 0; i < columns.length; i++) {
+        let column = columns[i];
+        for (var k = 0; k < rows.length; k++) { //for every square on the board
+            let row = rows[k];
+            let value = getPieceValue(chess.get(column + row), i, k);
+            total += value;
+        }
+    }
+    return total + mobilityScore(chess);
+}
+
+
+var mobilityScore = function (chess) { //find the mobility of a board for black
+    var moves = chess.moves().length;
+    return moves * -0.1;
+}
+//rewrite to be more intuitive later
+var getPieceValue = function (piece, x, y) { //piece evaluation function  
+    if (piece === null) { //if the square is empty
         return 0;
     }
-    var getAbsoluteValue = function (piece,x,y) {
+    var getAbsoluteValue = function (piece, x, y) { //piece values as well as position evaluation
         if (piece.type === 'p') {
-            return 10 + (piece.color === 'w' ? pawnTable[x][y] : reverseTable(pawnTable)[x][y]);
+            return 1 + (piece.color === 'w' ? pawnTable[x][y] : reverseTable(pawnTable)[x][y]);
         } else if (piece.type === 'r') {
-            return 50 + (piece.color === 'w' ? rookTable[x][y] : reverseTable(rookTable)[x][y]);
+            return 5 + (piece.color === 'w' ? rookTable[x][y] : reverseTable(rookTable)[x][y]);
         } else if (piece.type === 'n') {
-            return 30 + (piece.color === 'w' ? knightTable[x][y] : reverseTable(knightTable)[x][y]);
+            return 3 + (piece.color === 'w' ? knightTable[x][y] : reverseTable(knightTable)[x][y]);
         } else if (piece.type === 'b') {
-            return 30 + (piece.color === 'w' ? bishopTable[x][y] : reverseTable(bishopTable)[x][y]);
+            return 3 + (piece.color === 'w' ? bishopTable[x][y] : reverseTable(bishopTable)[x][y]);
         } else if (piece.type === 'q') {
-            return 90 + (piece.color === 'w' ? queenTable[x][y] : reverseTable(queenTable)[x][y]);
+            return 9 + queenTable[x][y];
         } else if (piece.type === 'k') {
-            return 900 + (piece.color === 'w' ? kingTable[x][y] : reverseTable(kingTable)[x][y]);
+            return 200 + (piece.color === 'w' ? kingTable[x][y] : reverseTable(kingTable)[x][y]);
         }
-        throw "Unknown piece type: " + piece.type;
     };
-
-    var absoluteValue = getAbsoluteValue(piece, x, y);
-    return piece.color === 'w' ? absoluteValue : -absoluteValue;
+    var absoluteValue = getAbsoluteValue(piece, x, y); 
+    return piece.color === 'w' ? absoluteValue : -absoluteValue; //negative value if black
 };
 
+
+
+//position evaluation tables
 var pawnTable = [
     [  0,  0,  0,  0,  0,  0,  0,  0],
     [ 50, 50, 50, 50, 50, 50, 50, 50],

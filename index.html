@@ -25,7 +25,7 @@
             var move = minimaxRoot(3, chess, true);
             var d1 = new Date().getTime();
             var movetime = d1 - d;
-            console.log(movetime / 1000);
+            console.log(movetime / 1000 + ' seconds to find move');
             console.log(`actual move ${move}`);
             chess.move(move);
             board.position(chess.fen());
