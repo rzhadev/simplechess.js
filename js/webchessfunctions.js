@@ -1,7 +1,7 @@
 // to do 
-//rewrite piece evaluation 
 // iterative deepening ?
 // end game handling ? transposition tables
+
 
 
 var minimaxRoot = function (depth, chess, maxplayer) { //negamax algorithm which will call minimax
@@ -75,7 +75,7 @@ var evaluateBoard = function (chess) { //evaluate heuristic value of the board
 
 var mobilityScore = function (chess) { //find the mobility of a board for black
     var moves = chess.moves().length;
-    return moves * -0.1;
+    return moves * -10;
 }
 //rewrite to be more intuitive later
 var getPieceValue = function (piece, x, y) { //piece evaluation function  
@@ -84,17 +84,17 @@ var getPieceValue = function (piece, x, y) { //piece evaluation function
     }
     var getAbsoluteValue = function (piece, x, y) { //piece values as well as position evaluation
         if (piece.type === 'p') {
-            return 1 + (piece.color === 'w' ? pawnTable[x][y] : reverseTable(pawnTable)[x][y]);
+            return 100 + (piece.color === 'w' ? pawnTable[x][y] : reverseTable(pawnTable)[x][y]);
         } else if (piece.type === 'r') {
-            return 5 + (piece.color === 'w' ? rookTable[x][y] : reverseTable(rookTable)[x][y]);
+            return 500 + (piece.color === 'w' ? rookTable[x][y] : reverseTable(rookTable)[x][y]);
         } else if (piece.type === 'n') {
-            return 3 + (piece.color === 'w' ? knightTable[x][y] : reverseTable(knightTable)[x][y]);
+            return 320 + (piece.color === 'w' ? knightTable[x][y] : reverseTable(knightTable)[x][y]);
         } else if (piece.type === 'b') {
-            return 3 + (piece.color === 'w' ? bishopTable[x][y] : reverseTable(bishopTable)[x][y]);
+            return 330 + (piece.color === 'w' ? bishopTable[x][y] : reverseTable(bishopTable)[x][y]);
         } else if (piece.type === 'q') {
-            return 9 + queenTable[x][y];
+            return 900 + queenTable[x][y];
         } else if (piece.type === 'k') {
-            return 200 + (piece.color === 'w' ? kingTable[x][y] : reverseTable(kingTable)[x][y]);
+            return 20000 + (piece.color === 'w' ? kingTable[x][y] : reverseTable(kingTable)[x][y]);
         }
     };
     var absoluteValue = getAbsoluteValue(piece, x, y); 
