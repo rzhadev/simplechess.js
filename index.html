@@ -21,7 +21,12 @@
             }
         };
         var makeMove = function () {
-            var move = minimaxRoot(2, chess, true);
+            var d = new Date().getTime();
+            var move = minimaxRoot(3, chess, true);
+            var d1 = new Date().getTime();
+            var movetime = d1 - d;
+            console.log(movetime / 1000);
+            console.log(`actual move ${move}`);
             chess.move(move);
             board.position(chess.fen());
         };
@@ -38,7 +43,7 @@
             if (chess.game_over()) {
                 alert('Game over');
             }
-            window.setTimeout(makeMove,100);
+            makeMove();
         };
         var onSnapEnd = function () {
             board.position(chess.fen());

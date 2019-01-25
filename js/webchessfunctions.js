@@ -1,20 +1,25 @@
 // to do 
-// make function to evaluate a piece for a color only if the piece is not null :done
-// make function to evaluate board for a color 
+// improve evaluation, mobility etc
+// end game handling? transposition tables
+// iterative deepening ? 
 var minimaxRoot = function (depth, chess, maxplayer) {
     var moves = chess.moves();
-    let bestValue = 0;
-    let bestMove;
+
+    let bestValue = -9999;
+    let bestMove = null; 
     for (var i = 0; i < moves.length; i++) {
         var move = moves[i];
+        console.log(`move ${move}`);
         chess.move(move);
         var value = minimax(depth - 1, chess, -10000, 10000, !maxplayer);
+        console.log(`value ${value}`);
         chess.undo();
         if (value >= bestValue) {
             bestMove = move;
             bestValue = value;
         }
     }
+    console.log(`best value ${bestValue}`);
     return bestMove;
 }
 var evaluateBoard = function (chess) {
