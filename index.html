@@ -55,7 +55,7 @@
             if (move === null) {
                 return 'snapback';
             }
-            window.setTimeout(makeMove(), 500);
+            window.setTimeout(makeMove, 250);
         };
         var onSnapEnd = function () {
             board.position(chess.fen());
