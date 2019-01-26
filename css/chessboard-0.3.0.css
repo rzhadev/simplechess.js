@@ -10,12 +10,14 @@
 /* clearfix */
 .board {
     width: 400px;
-    margin: auto;
 }
 .clearfix-7da63 {
   clear: both;
 }
-
+.heading {
+    margin:auto;
+    font-family: 'Comic Sans MS', sans-serif;
+}
 /* board */
 .board-b72b1 {
   border: 2px solid #404040;
