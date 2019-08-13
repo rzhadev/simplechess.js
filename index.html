@@ -10,12 +10,11 @@
     <script type ="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type ="text/javascript" src="js/chessboard-0.3.0.js"></script>
     <script type ="text/javascript" src="js/chess.js"></script>
-    <script type="text/javascript" src="js/webchessfunctions.js"></script>
-    <h1 class="heading">This Bot will make you surrender to Allah</h1>
     <div id="board" style="width:400px"></div>
     <script>
         var chess = new Chess();
         var board;
+        
         var removeGraySquare = function () {
             $('#board .square-55d63').css('background', '');
         };
@@ -73,15 +72,17 @@
         var onMouseoutSquare = function (square, piece) {
             removeGraySquare();
         }
+        
         var config = {
             draggable: true,
             position: 'start',
+            
             onDragStart: onDragStart,
             onDrop: onDrop,
             onSnapEnd: onSnapEnd,
             onMouseoutSquare: onMouseoutSquare,
             onMouseoverSquare: onMouseoverSquare,
-
+            
         };
         board = ChessBoard('board', config);
  
